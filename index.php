@@ -8,15 +8,18 @@ $controller = $segments[1];
 
 if(file_exists("Controllers/".$controller.".php")){
     require "Controllers/".$controller.".php";
-    $authObj = new auth();
+    $obj = new $controller();
+
 }else{
     echo "file not exist";
     exit();
 }
-if(method_exists($authObj,$segments[2])){
-    $authObj->test();
+if(method_exists($obj,$segments[2])){
+    $method = $segments[2];
+    $obj->$method();
 }else{
     echo "there are not such method";
 }
+
 
 
