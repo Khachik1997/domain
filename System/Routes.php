@@ -9,34 +9,34 @@ class Routes
     {
         if (!empty($path[0])) {
             $ctrl = ucfirst($path[0]);
-
-            if (file_exists("Controllers/" . $ctrl . ".php")) {
-                $ctrl = "Controllers" . DIRECTORY_SEPARATOR . $ctrl;
-                if (class_exists($ctrl)) {
-                    $ctrl_obj = new $ctrl;
-                    if (!empty($path[1])) {
-                        $method = $path[1];
-                        if (method_exists($ctrl_obj, $method)) {
-                            $arguments = array_slice($path, 2);
-                            call_user_func_array(array($ctrl_obj, $method), $arguments);
-                        } else {
-                            echo "ERROR 404";
-                        }
+        } else {
+            $ctrl = "Welcome";
+        }
+        if (file_exists("Controllers". DIRECTORY_SEPARATOR . $ctrl . ".php")) {
+            $ctrl = "Controllers\\"  . $ctrl;
+            if (class_exists($ctrl)) {
+                $ctrl_obj = new $ctrl;
+                if (!empty($path[1])) {
+                    $method = $path[1];
+                    if (method_exists($ctrl_obj, $method)) {
+                        $arguments = array_slice($path, 2);
+                        call_user_func_array(array($ctrl_obj, $method), $arguments);
                     } else {
-                        if (method_exists($ctrl_obj, "index")) {
-                            $ctrl_obj->index();
-                        } else {
-                            echo "The method index does not exist";
-                        }
+
+                        echo "No such METHOD";
                     }
                 } else {
-                    echo "404 ERROR";
+                    if (method_exists($ctrl_obj, "index")) {
+                        $ctrl_obj->index();
+                    } else {
+                        echo "The method index does not exist";
+                    }
                 }
             } else {
-                echo " 404 ERROR";
+                echo "Class not exist";
             }
         } else {
-            // i dont know yet;
+            echo " File Not Exist";
         }
 
     }
