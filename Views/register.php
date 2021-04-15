@@ -10,6 +10,7 @@
         <label for="email" class="form-label">Email address</label>
         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
         <p style="color: red"><?= $this->errorEmail?></p>
+        <p style="color: red"><?= $this->regError ?></p>
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">

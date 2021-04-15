@@ -19,6 +19,5 @@
     </div>
     <input type="submit" class="btn btn-primary"  value="Login" >
     <a href="/auth/register">Register</a>
-
 </form>
 
