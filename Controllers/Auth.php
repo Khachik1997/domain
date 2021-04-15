@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+
 use Models\User;
 use System\Controller;
 
@@ -20,17 +21,23 @@ class Auth extends Controller
                 } else {
                     $user = new User;
                     $result = $user->login($_POST["email"], $_POST["password"]);
-                    $userId = $result["id"];
-                    if($userId){
-                        $_SESSION['userId'] = $userId;
-                        header("Location:/account");
-                    }else{
-                        echo "something Wrong";
+
+                    if (empty($result)) {
+                        $this->view->errorEmail = "Wrong password or email";
+                    } else {
+                        $userId = $result["id"];
+                        if ($userId) {
+                            $user->setSession("userId", $userId);
+                            header("Location:/account");
+                        } else {
+                            $this->view->errorEmail = "Wrong password or email";
+                        }
                     }
                 }
+
             }
         }
-        $this->view->render("login");
+        $this->view->render("login",false);
     }
 
     public function register()
@@ -53,11 +60,12 @@ class Auth extends Controller
                 }
             }
         }
-        $this->view->render("register");
+        $this->view->render("register",false);
     }
 
 
-    public function logout(){
+    public function logout()
+    {
         session_start();
         session_destroy();
         header("location:/auth/login");

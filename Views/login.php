@@ -1,6 +1,14 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <title>Document</title>
+</head>
+<body>
 <h1 style="text-align: center">Welcome</h1>
-
 <form action="/auth/login" method="post" style="width:50%;margin: auto" >
     <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
@@ -20,4 +28,8 @@
     <input type="submit" class="btn btn-primary"  value="Login" >
     <a href="/auth/register">Register</a>
 </form>
+
+</body>
+
+
 

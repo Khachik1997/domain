@@ -63,10 +63,9 @@ class  Db extends \mysqli
     public function update($table_name, $data)
     {
         $where_condition = $this->whereStr;
-        $this->whereStr = null;
         $updateData="";
         foreach ($data as $key => $value){
-            $updateData .=$key. "= '".$this->conn->real_escape_string($value) ."',";
+            $updateData .=$key. "= '".parent::real_escape_string($value) ."',";
         }
         $updateData = substr($updateData,0,-1);
         $sql = "UPDATE  $table_name  SET   $updateData $where_condition";

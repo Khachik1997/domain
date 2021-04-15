@@ -10,3 +10,13 @@
     <title>Document</title>
 </head>
 <body>
+
+
+
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-1">
+            <div class="ml-auto p-2 bd-highlight"><a href="/auth/logout">Logout</a></div>
+        </div>
+    </div>
+</div>
