@@ -19,11 +19,8 @@ class Account extends Controller{
         $userAbout = $user->getUser($user->getSession("userId"));
         $this->view->userName = $userAbout['name'];
         $this->view->userEmail = $userAbout['email'];
-
-
-
         if(isset($_POST['avatar'])){
-            $x= $user->db->where("id",$userAbout["id"])->update("user",["avatar"=>$_POST['avatar']]);
+            $user->db->where("id",$userAbout["id"])->update("user",["avatar"=>$_POST['avatar']]);
             $this->view->userAvatar = $_POST['avatar'];
         }else{
 

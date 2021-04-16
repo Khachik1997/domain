@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #F0F2F5;
+}
+
+input[type = "file"]{
+    display: none;
+}
+.formChangeAvatar label{
+    border: 1px solid #746d6d;
+    display: inline-block;
+    padding: 3px 6px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+    background-color:#43609C;
+    margin-left: 20px;
+}
+
+.formChangeAvatar label:hover{
+    color: rgba(0,0,0,0.9);
+}
+
+.navbar{
+    background-color:#43609C;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+
+}
+.navbar a {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    margin-right: 20px;
+}
+.navbar a:hover{
+    color: rgba(0,0,0,0.9);
+}
