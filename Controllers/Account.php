@@ -2,6 +2,7 @@
 namespace Controllers;
 use System\Controller;
 use Models\User;
+use Helpers\UploadImage;
 
 class Account extends Controller{
     function __construct(){
@@ -11,25 +12,54 @@ class Account extends Controller{
         }
     }
 
-
-
-
     public function index(){
         $user = new user;
+
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+            if (empty($_FILES)){
+                $this->view->uploadError = "File cant be empty";
+            }else{
+                $uploadObj = new UploadImage();
+
+                $targetDir = "./assets/images/avatar/".$_FILES['avatar']['name'];
+                $result = $uploadObj->execute($_FILES,$targetDir);
+                if(!$result['success']){
+                    $this->view->uploadError = $result['message'];
+                }
+            }
+
+        }
         $userAbout = $user->getUser($user->getSession("userId"));
         $this->view->userName = $userAbout['name'];
         $this->view->userEmail = $userAbout['email'];
-        if(isset($_POST['avatar'])){
-            $user->db->where("id",$userAbout["id"])->update("user",["avatar"=>$_POST['avatar']]);
-            $this->view->userAvatar = $_POST['avatar'];
+        if($userAbout["avatar"] === "NULL"){
+            $this->view->userAvatar = "default.jpg";
         }else{
-
             $this->view->userAvatar = $userAbout['avatar'];
         }
-
+        $this->view->friendProfile = false;
         $this->view->render("account");
     }
 
+    public function friends (){
+        $user =new user;
+        $this->view->friends = $user->getFriends($user->getSession("userId"));
+        $this->view->render("friends");
+    }
 
+    public function profile($id){
+        $user = new user;
+        $userAbout = $user->getUser($id);
+
+        $this->view->userName = $userAbout['name'];
+        $this->view->userEmail = $userAbout['email'];
+        if($userAbout["avatar"] === "NULL"){
+            $this->view->userAvatar = "default.jpg";
+        }else{
+            $this->view->userAvatar = $userAbout['avatar'];
+        }
+            $this->view->friendProfile = true;
+            $this->view->render("account");
+    }
 
 }

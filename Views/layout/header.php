@@ -14,7 +14,8 @@
 
 
 <div class="navbar">
-    <a href="#">Friends</a>
+    <a href="/account/"><i class="fas fa-home">Home</i></a>
+    <a href="/account/friends">Friends</a>
     <a href="/auth/logout">Logout</a>
 </div>
 

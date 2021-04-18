@@ -22,7 +22,7 @@ final class CreateUserTable extends AbstractMigration
         $table->addColumn('name', 'string', ['limit' => 50])
             ->addColumn('email', 'string', ['limit' => 50])
             ->addColumn('password', 'string', ['limit' => 50])
-            ->addColumn('avatar', 'string', ['limit' => 50, 'default'=>'default.jpg'])
+            ->addColumn('avatar', 'string', ['limit' => 50, 'default'=>'NULL'])
             ->create();
     }
 }

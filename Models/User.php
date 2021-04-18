@@ -44,6 +44,9 @@ class User extends Model
         return $this->db->select("SELECT id,email, name, avatar FROM user WHERE id = '$userId'");
     }
 
+    public function getFriends($userId){
+        return $this->db->select("SELECT id,email,name,avatar FROM user WHERE  NOT id = '$userId'  ");
+    }
 
     public function setSession($key, $value)
     {
@@ -51,10 +54,13 @@ class User extends Model
         return true;
     }
 
+
+
     public function getSession($key)
     {
         return $_SESSION[$key];
     }
+
 
 
 }
