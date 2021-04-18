@@ -44,3 +44,24 @@ input[type = "file"]{
 }
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!SECTION FRIENDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 
+.userCard{
+    width: 150px;
+    margin: 20px;
+    background-color: #fff;
+    float: left;
+}
+.userAvatar{
+    width: 150px;
+    height: 120px;
+}
+.userAvatar img{
+    object-fit: cover;
+    height: 100%;
+    width:100%;
+}
+.userAbout{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+
+}
