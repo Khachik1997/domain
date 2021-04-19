@@ -43,13 +43,27 @@ class Account extends Controller{
 
     public function friends (){
         $user =new user;
-        $this->view->friends = $user->getFriends($user->getSession("userId"));
+        $friends = $user->getFriends($user->getSession("userId"));
+        if (empty($friends)){
+            $this->view->noFriends = "You don't have a friends yet";
+            $this->view->areFriends = false;
+        }else{
+            if(!(array_keys($friends) == range(0, count($friends) - 1))){
+                $friends = array($friends);
+            }
+            $this->view->friends = $friends;
+            $this->view->areFriends = true;
+        }
         $this->view->render("friends");
     }
+
+
+
 
     public function profile($id){
         $user = new user;
         $userAbout = $user->getUser($id);
+
         $this->view->userName = $userAbout['name'];
         $this->view->userEmail = $userAbout['email'];
         if($userAbout["avatar"] === "NULL"){
