@@ -50,7 +50,6 @@ class Account extends Controller{
     public function profile($id){
         $user = new user;
         $userAbout = $user->getUser($id);
-
         $this->view->userName = $userAbout['name'];
         $this->view->userEmail = $userAbout['email'];
         if($userAbout["avatar"] === "NULL"){
