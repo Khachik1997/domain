@@ -1,7 +1,10 @@
 <?php
-if ($this->areFriends) {
+
+if (!$this->friends) { ?>
+    <p style="text-align: center;margin-top: 20px"><?= $this->noFriends ?></p>
+<?php } else {
     foreach ($this->friends as $friend) {
-        if ($friend['avatar'] == 'NULL') {
+        if (!$friend['avatar']) {
             $friend['avatar'] = "default.jpg";
         } ?>
         <div class="userCard">
@@ -9,16 +12,15 @@ if ($this->areFriends) {
                 <img src="/assets/images/avatar/<?= $friend['avatar'] ?>" alt="picture">
             </div>
             <div class="userAbout">
-                <h4 class="card-title">Name:<?= $friend['name'] ?></h4>
-                <p class="card-text">Email:<?= $friend['email'] ?></p>
+                <p>Name:<?= $friend['name'] ?><a href="/account/chat/<?= $friend['id'] ?>"><i class="icon-mail"></i></a></p>
+                <p>Email:<?= $friend['email'] ?></p>
                 <a href="/account/profile/<?= $friend['id'] ?>" class="btn btn-primary">See Profile</a>
             </div>
         </div>
+
+
         <?php
     }
-}else{ ?>
-        <p style="text-align: center;margin-top: 20px"><?=$this->noFriends?></p>
-<?php
 }
 ?>
 

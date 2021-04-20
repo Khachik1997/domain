@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Helpers\Session;
 use Models\User;
 use System\Controller;
 
@@ -21,13 +22,12 @@ class Auth extends Controller
                 } else {
                     $user = new User;
                     $result = $user->login($_POST["email"], $_POST["password"]);
-
                     if (empty($result)) {
                         $this->view->errorEmail = "Wrong password or email";
                     } else {
                         $userId = $result["id"];
                         if ($userId) {
-                            $user->setSession("userId", $userId);
+                            Session::setSession("userId", $userId);
                             header("Location:/account");
                         } else {
                             $this->view->errorEmail = "Wrong password or email";

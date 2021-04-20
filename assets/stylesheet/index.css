@@ -63,5 +63,85 @@ input[type = "file"]{
     margin-top: 5px;
     display: flex;
     flex-direction: column;
+}
+.userAbout p{
+    overflow: hidden;
+}
 
+/*////////////////////////////////CHAT////////////////////////////////////////////////////*/
+section.chat h2 {
+    text-align: center;
+}
+
+
+.messages{
+    width: 50%;
+    height: 400px;
+    overflow: auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #43609C;
+}
+
+.container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+}
+
+.container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+
+.formMessage input{
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 485px;
+    transform: translate(-50%,0);
+    background-color: #f3e9e9;
+}
+
+.formMessage  label{
+    position: absolute;
+    left: 75%;
+    bottom: 15%;
+    transform: translate(-110%);
+    color: #449fdb;
+    cursor: pointer;
+    line-height: inherit;
 }

@@ -1,9 +1,9 @@
 
 <div class="d-flex bd-highlight mb-3" >
-    <div class="p-2 bd-highlight"><img src="/assets/images/avatar/<?= $this->userAvatar ?>" class="img-thumbnail" alt="..." style="display: inline-block;width: 160px;height: 160px;min-width: 160px" ></div>
+    <div class="p-2 bd-highlight"><img src="/assets/images/avatar/<?= $this->user['avatar'] ?>" class="img-thumbnail" alt="..." style="display: inline-block;width: 160px;height: 160px;min-width: 160px" ></div>
     <div class="p-2 bd-highlight">
-        <p> Name : <?= $this->userName ?></p>
-        <p style="white-space: nowrap"> Email : <?= $this->userEmail ?></p>
+        <p> Name : <?= $this->user['name'] ?></p>
+        <p style="white-space: nowrap; "> Email : <?= $this->user['email'] ?></p>
         <p style="color: red"><?= $this->uploadError ?></p>
     </div>
 </div>

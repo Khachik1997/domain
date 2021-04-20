@@ -1,78 +1,117 @@
 <?php
+
 namespace Controllers;
+
 use System\Controller;
 use Models\User;
 use Helpers\UploadImage;
+use Helpers\Session;
 
-class Account extends Controller{
-    function __construct(){
-            parent::__construct();
-        if(!isset($_SESSION["userId"])){
+class Account extends Controller
+{
+    private $user;
+
+    function __construct()
+    {
+
+        if (!Session::getSession("userId")) {
             header("Location:/auth/login");
         }
+        parent::__construct();
+        $this->user = new User;
+
     }
 
-    public function index(){
-        $user = new user;
 
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            if (empty($_FILES)){
+
+    public function index()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+
+            if (empty($_FILES)) {
                 $this->view->uploadError = "File cant be empty";
-            }else{
-                $uploadObj = new UploadImage();
+            } else {
 
-                $targetDir = "./assets/images/avatar/".$_FILES['avatar']['name'];
-                $result = $uploadObj->execute($_FILES,$targetDir);
-                if(!$result['success']){
+                $uploadObj = new UploadImage();
+                $imageFileType = strtolower(pathinfo($_FILES['avatar']['name'],PATHINFO_EXTENSION));
+                $uploadObj->options['changeName'] = true;
+                if($uploadObj->options["changeName"]) {
+                    $newAvatarName = date("H-i-s-h"). "." . $imageFileType;
+                }else{
+                    $newAvatarName = $_FILES["avatar"]["name"];
+                }
+
+                $targetDir = "./assets/images/avatar/" .$newAvatarName;
+
+
+                $result = $uploadObj->execute($_FILES['avatar'], $targetDir);
+                if ($result['success']) {
+                    $id = Session::getSession("userId");
+                    $this->user->db->where("id", $id)->update("user", ["avatar" => $newAvatarName]);
+                } else {
                     $this->view->uploadError = $result['message'];
                 }
             }
-
         }
-        $userAbout = $user->getUser($user->getSession("userId"));
-        $this->view->userName = $userAbout['name'];
-        $this->view->userEmail = $userAbout['email'];
-        if($userAbout["avatar"] === "NULL"){
-            $this->view->userAvatar = "default.jpg";
-        }else{
-            $this->view->userAvatar = $userAbout['avatar'];
+        $userAbout = $this->user->getUser(Session::getSession("userId"));
+        $this->view->user = $userAbout;
+
+        if (!$userAbout["avatar"]) {
+            $this->view->user['avatar'] = "default.jpg";
         }
         $this->view->friendProfile = false;
         $this->view->render("account");
     }
 
-    public function friends (){
-        $user =new user;
-        $friends = $user->getFriends($user->getSession("userId"));
-        if (empty($friends)){
+
+
+
+    public function friends()
+    {
+        $friends = $this->user->getFriends(Session::getSession("userId"));
+        if (empty($friends)) {
             $this->view->noFriends = "You don't have a friends yet";
-            $this->view->areFriends = false;
-        }else{
-            if(!(array_keys($friends) == range(0, count($friends) - 1))){
-                $friends = array($friends);
-            }
-            $this->view->friends = $friends;
-            $this->view->areFriends = true;
         }
+        $this->view->friends = $friends;
         $this->view->render("friends");
     }
 
 
 
 
-    public function profile($id){
-        $user = new user;
-        $userAbout = $user->getUser($id);
+    public function profile($id)
+    {
 
-        $this->view->userName = $userAbout['name'];
-        $this->view->userEmail = $userAbout['email'];
-        if($userAbout["avatar"] === "NULL"){
-            $this->view->userAvatar = "default.jpg";
-        }else{
-            $this->view->userAvatar = $userAbout['avatar'];
+        $userAbout = $this->user->getUser($id);
+        $this->view->user = $userAbout;
+        if (!$userAbout["avatar"]) {
+            $this->view->user['avatar'] = "default.jpg";
         }
-            $this->view->friendProfile = true;
-            $this->view->render("account");
+        $this->view->friendProfile = true;
+        $this->view->render("account");
     }
 
+
+
+
+    public function chat($friendId)
+    {
+        $friendAbout = $this->user->getUser($friendId);
+        if (!$friendAbout['avatar']) {
+            $friendAbout['avatar'] = "default.jpg";
+        }
+        $this->view->friend = $friendAbout;
+        $userId = Session::getSession("userId");
+        $userAbout = $this->user->getUser($userId);
+        if (!$userAbout['avatar']) {
+            $userAbout['avatar'] = "default.jpg";
+        }
+        $this->view->user = $userAbout;
+        $messages = $this->user->getMessages($userId, $friendId);
+        $this->view->messages = $messages;
+        $this->view->userId = $userId;
+        $this->view->friendId = $friendId;
+
+        $this->view->render("chat");
+    }
 }

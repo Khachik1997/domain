@@ -33,20 +33,21 @@ class  Db extends \mysqli
         return $this;
     }
 
+    public function select($sql, $all = true){
 
-    public function select($sql)
-    {
-        $arrResult = [];
-        $result = parent::query($sql);
-        if($result->num_rows === 1){
-            return $result->fetch_assoc();
-        }else {
-            while($row = $result->fetch_assoc()) {
-                $arrResult[] = $row;
-            }
-            return $arrResult;
+        $query_select = $this->query($sql);
+        if(!$all) {
+
+            return $query_select->fetch_assoc();
         }
+        $data = [];
+        while($row = $query_select->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
     }
+
+
 
     public function insert($tbl_name, $data)
     {
