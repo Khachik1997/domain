@@ -20,9 +20,9 @@ final class CreateMessagesTable extends AbstractMigration
     {
 		$table = $this->table('messages');
 		$table->addColumn('body', 'text')
-            ->addColumn('date', 'timestamp')
+            ->addColumn('date', 'timestamp',['default'=>'CURRENT_TIMESTAMP'])
             ->addColumn('from_id', 'integer')
-			->addColumn('to_id', 'integer', )
+			->addColumn('to_id', 'integer' )
             ->create();
     }
 }
