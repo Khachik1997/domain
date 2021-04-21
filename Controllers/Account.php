@@ -114,4 +114,7 @@ class Account extends Controller
 
         $this->view->render("chat");
     }
+
+
+
 }
