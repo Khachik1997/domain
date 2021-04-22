@@ -6,12 +6,13 @@
         if (!empty($this->messages)) {
 
             foreach ($this->messages as $message) {
+
                 if ($message['from_id'] === $this->userId) {
                     ?>
 
 
                     <div class="container" >
-                        <img src="/assets/images/avatar/<?= $this->user['avatar'] ?>" alt="Avatar" style="width:100%;">
+                        <img src="/assets/images/avatar/<?= $message['avatar'] ?>" alt="Avatar" style="width:100%;">
                         <p><?= $message['body'] ?></p>
                         <span class="time-right"><?= $message['date'] ?></span>
                     </div>
@@ -50,5 +51,8 @@
 </div>
 
 <script>
-    let friendId = <?= $this->friend['id']?>
+    let friendId = <?= $this->friend['id']?>;
+
+
+
 </script>
