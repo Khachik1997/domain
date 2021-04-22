@@ -102,12 +102,12 @@ class Account extends Controller
         }
     }
 
-    public function getNewMessage ($friendId){
-
-        $result =$this->user->db->select("SELECT * FROM messages WHERE  to_id = '$_GET[to_id]' " );
-
-        echo json_encode(($result[count($result) - 1]));
-    }
+//    public function getNewMessage ($friendId){
+//
+//        $result =$this->user->db->select("SELECT * FROM messages WHERE  to_id = '$_GET[to_id]' " );
+//
+//        echo json_encode(($result[count($result) - 1]));
+//    }
     public function chat($friendId)
     {
         $friendAbout = $this->user->getUser($friendId);
