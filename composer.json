@@ -1,6 +1,8 @@
 {
     "name": "test/test1",
     "require": {
-      "ext-mysqli": "*"
-    }
+      "ext-mysqli": "*",
+      "ext-json": "*"
+    },
+  "description": "x"
 }

@@ -91,7 +91,20 @@ class Account extends Controller
         $this->view->render("account");
     }
 
+    public function sentMessage ($friendId){
 
+        if(isset($_POST['message'])){
+            $data = [
+                "from_id" => Session::getSession("userId"),
+                "to_id" => $friendId,
+                "body" => $_POST['message']
+            ];
+            $this->user->db->insert("messages",$data);
+            $result =  $this->user->getAboutMess(Session::getSession("userId"),$friendId);
+
+            echo json_encode(($result[count($result) -1 ]) );
+        }
+    }
 
 
     public function chat($friendId)
@@ -107,7 +120,8 @@ class Account extends Controller
             $userAbout['avatar'] = "default.jpg";
         }
         $this->view->user = $userAbout;
-        $messages = $this->user->getMessages($userId, $friendId);
+        $messages = $this->user->getAboutMess($userId, $friendId);
+
         $this->view->messages = $messages;
         $this->view->userId = $userId;
         $this->view->friendId = $friendId;

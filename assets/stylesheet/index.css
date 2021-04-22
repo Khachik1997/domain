@@ -82,6 +82,7 @@ section.chat h2 {
     left: 50%;
     transform: translate(-50%);
     background-color: #43609C;
+    scroll-behavior: smooth;
 }
 
 .container {
@@ -127,21 +128,17 @@ section.chat h2 {
     color: #999;
 }
 
-.formMessage input{
-    width: 50%;
-    position: absolute;
-    left: 50%;
-    top: 485px;
-    transform: translate(-50%,0);
-    background-color: #f3e9e9;
-}
+.sendMsg{
 
-.formMessage  label{
     position: absolute;
-    left: 75%;
-    bottom: 15%;
-    transform: translate(-110%);
-    color: #449fdb;
-    cursor: pointer;
-    line-height: inherit;
+    top:485px;
+    left: 50%;
+    width: 50%;
+    transform: translate(-50%);
+    display: flex;
+
+
+}
+#textMessage{
+    width: 100%;
 }

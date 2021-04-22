@@ -49,8 +49,10 @@ class User extends Model
     }
 
 
-    public function getMessages($userId,$friendId){
-        return $this->db->select("SELECT * FROM messages   WHERE from_id = '$userId'AND  to_id = '$friendId' OR  from_id = '$friendId' AND to_id ='$userId'");
+    public function getAboutMess($userId,$friendId){
+        return $this->db->select("SELECT m.body,m.date,m.from_id,u.avatar,u.name FROM messages as m
+                                                LEFT JOIN user as u ON (m.from_id = u.id )
+                                                WHERE (from_id = '$userId'AND  to_id = '$friendId') OR ( from_id = '$friendId' AND to_id ='$userId')");
 
 
 

@@ -10,7 +10,7 @@
                     ?>
 
 
-                    <div class="container">
+                    <div class="container" >
                         <img src="/assets/images/avatar/<?= $this->user['avatar'] ?>" alt="Avatar" style="width:100%;">
                         <p><?= $message['body'] ?></p>
                         <span class="time-right"><?= $message['date'] ?></span>
@@ -39,11 +39,16 @@
         ?>
 
 
+
 </section>
 
 
-<form action="#" class="formMessage">
-    <input type="text" id="forMessage">
-    <label for="forMessage"><i class="icon-play3"></i></label>
+<div class="sendMsg">
+    <label for="textMessage"></label>
+    <textarea name="textMessage" id="textMessage"></textarea>
+    <button id = "send"><i  class="icon-play3" style="color: #449fdb"></i></button>
+</div>
 
-</form>
+<script>
+    let friendId = <?= $this->friend['id']?>
+</script>
