@@ -54,7 +54,6 @@ class Account extends Controller
         }
         $userAbout = $this->user->getUser(Session::getSession("userId"));
         $this->view->user = $userAbout;
-
         if (!$userAbout["avatar"]) {
             $this->view->user['avatar'] = "default.jpg";
         }
@@ -71,12 +70,12 @@ class Account extends Controller
         }
         $this->view->friends = $friends;
         $this->view->render("friends");
+
     }
 
 
     public function profile($id)
     {
-
         $userAbout = $this->user->getUser($id);
         $this->view->user = $userAbout;
         if (!$userAbout["avatar"]) {
@@ -86,46 +85,45 @@ class Account extends Controller
         $this->view->render("account");
     }
 
-    public function sentMessage($friendId)
+    public function sendMessage($friendId)
     {
-
         if (isset($_POST['message'])) {
             $data = [
                 "from_id" => Session::getSession("userId"),
                 "to_id" => $friendId,
                 "body" => $_POST['message']
             ];
-            $this->user->db->insert("messages", $data);
-            $result = $this->user->getAboutMess(Session::getSession("userId"), $friendId);
-
-            echo json_encode(($result[count($result) - 1]));
+            if( $this->user->insertMsg($data)){
+                echo json_encode(["success"=>true,"date"=>date("Y-m-d H:i:s")] );
+            }else{
+                echo json_encode(["success"=>false]);
+            }
         }
     }
+    public function getMessage ($friendId,$lastMsgId){
+        $userId = Session::getSession("userId");
+        $result = $this->user->getMessages($userId,$friendId,$lastMsgId);
+        echo json_encode($result);
+    }
 
-//    public function getNewMessage ($friendId){
-//
-//        $result =$this->user->db->select("SELECT * FROM messages WHERE  to_id = '$_GET[to_id]' " );
-//
-//        echo json_encode(($result[count($result) - 1]));
-//    }
+
+
     public function chat($friendId)
     {
-        $friendAbout = $this->user->getUser($friendId);
-        if (!$friendAbout['avatar']) {
-            $friendAbout['avatar'] = "default.jpg";
-        }
-        $this->view->friend = $friendAbout;
         $userId = Session::getSession("userId");
-        $userAbout = $this->user->getUser($userId);
-        if (!$userAbout['avatar']) {
-            $userAbout['avatar'] = "default.jpg";
+        $userInfo = $this->user->getUser($userId);
+        if (!$userInfo['avatar']) {
+            $userInfo['avatar'] = "default.jpg";
         }
-        $this->view->user = $userAbout;
-        $messages = $this->user->getAboutMess($userId, $friendId);
+        $this->view->user = $userInfo;
+        $messages = $this->user->getMessages($userId, $friendId);
         $this->view->messages = $messages;
         $this->view->userId = $userId;
+        $this->view->userAvatar = $userInfo['avatar'];
         $this->view->friendId = $friendId;
-
+//        we need Last Id from message Table
+        $lastIdMsgTable = $this->user->lastMsgId();
+        $this->view->lastIdMsgTable =  $lastIdMsgTable;
         $this->view->render("chat");
     }
 

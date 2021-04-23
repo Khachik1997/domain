@@ -18,7 +18,6 @@ class Auth extends Controller
             } else {
                 if (empty($_POST["password"])) {
                     $this->view->errorPassword = "Password can't be empty";
-
                 } else {
                     $user = new User;
                     $result = $user->login($_POST["email"], $_POST["password"]);
@@ -44,11 +43,9 @@ class Auth extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (empty($_POST["email"])) {
-
                 $this->view->errorEmail = "Email can't be empty";
             } else {
                 if (empty($_POST["password"])) {
-
                     $this->view->errorPassword = "Password can't be empty";
                 } else {
                     $user = new User;

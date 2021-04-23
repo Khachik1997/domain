@@ -1,5 +1,5 @@
 <section class="chat">
-    <h2>Chat Messages with <?= $this->friend['name'] ?></h2>
+    <h2>Chat Messages </h2>
     <div class="messages">
 
         <?php
@@ -7,6 +7,9 @@
 
             foreach ($this->messages as $message) {
 
+                if(!$message['avatar']){
+                    $message['avatar'] = "default.jpg";
+                }
                 if ($message['from_id'] === $this->userId) {
                     ?>
 
@@ -22,7 +25,7 @@
 
 
                     <div class="container darker">
-                        <img src="/assets/images/avatar/<?= $this->friend['avatar'] ?>" alt="Avatar" class="right"
+                        <img src="/assets/images/avatar/<?= $message['avatar'] ?>" alt="Avatar" class="right"
                              style="width:100%;">
                         <p><?= $message['body'] ?></p>
                         <span class="time-left"><?= $message['date'] ?></span>
@@ -32,9 +35,11 @@
                     <?php
                 }
             }
-        }else{?>
-            <p style="color: white;text-align: center;margin-top: 20px">You don't have a messages yet</p>
-        <?php
+        }else{
+            // NOT MESSAGE YET
+            // here we need change lastMsgId ,because now is null.
+            $this->messages[0]['id'] = 0;
+
 
         }
         ?>
@@ -51,8 +56,9 @@
 </div>
 
 <script>
-    let friendId = <?= $this->friend['id']?>;
 
-
-
+    let lastMsgId = <?= $this->messages[count($this->messages) - 1]['id']?> ;
+    let friendId = <?= $this->friendId  ?>;
+    let userAvatar = '<?= $this->user['avatar'] ?>' ;
+    let sessionId = <?= $this->userId ?>;
 </script>
